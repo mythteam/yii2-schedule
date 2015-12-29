@@ -1,0 +1,30 @@
+{
+  "name": "mythteam/yii2-schedule",
+  "description": "schedule",
+  "type": "library",
+  "license": "BSD",
+  "authors": [
+    {
+      "name": "lichunqiang",
+      "email": "light-li@hotmail.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "~2.0.6",
+    "mtdowling/cron-expression": "~1.0",
+    "symfony/process": "2.6.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "mythteam\\schedule\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "mythteam\\tests\\": "tests"
+    }
+  }
+}
