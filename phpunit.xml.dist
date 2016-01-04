@@ -3,8 +3,7 @@
         bootstrap='tests/bootstrap.php'>
     <testsuites>
         <testsuite name="All">
-            <directory suffix="Test.php">tests/plain</directory>
-            <directory suffix="Test.php">tests/db</directory>
+            <directory suffix="Test.php">tests</directory>
             <exclude>tests/bootstrap.php</exclude>
         </testsuite>
     </testsuites>
@@ -16,7 +15,6 @@
     <filter>
       <whitelist processUncoveredFilesFromWhitelist="true">
         <directory suffix=".php">src</directory>
-        <file>Config.php</file>
         <exclude>
           <directory>vendor</directory>
           <directory>tests</directory>
