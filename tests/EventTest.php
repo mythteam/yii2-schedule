@@ -56,7 +56,13 @@ class EventTest extends \PHPUnit_Framework_TestCase
         //default
         $this->event->output('/home/schedule.log');
 
-        $this->assertEquals('ls -a > /home/schedule.log 2>&1 &', $this->event->getSummaryForDisplay());
+        $this->assertEquals('ls -a > /home/schedule.log 2>&1 &', $this->event->buildCommand());
+    }
+
+    public function testAssignTimezone()
+    {
+        $this->event->timezone('PRC');
+
     }
 
     public function shortExpression()

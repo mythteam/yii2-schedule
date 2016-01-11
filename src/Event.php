@@ -604,7 +604,7 @@ class Event extends \yii\base\Component
      *
      * @return string
      */
-    protected function buildCommand()
+    public function buildCommand()
     {
         $command = $this->command . ' > ' . $this->_output . ' 2>&1 &';
 

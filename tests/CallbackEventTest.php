@@ -12,6 +12,7 @@ class CallbackEventTest extends EventTest
         $this->event = new CallbackEvent(function () {
             return 'string';
         });
+        $this->event->command = 'ls -a';
     }
 
     public function testRun()
@@ -42,9 +43,4 @@ class CallbackEventTest extends EventTest
         $this->assertEquals('test', $this->event->getSummaryForDisplay());
     }
 
-    //true test of output?
-    public function testFileOutput()
-    {
-        $this->assertTrue(true);
-    }
 }
