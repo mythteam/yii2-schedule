@@ -55,7 +55,7 @@ class CallbackEvent extends Event
     public function run(Application $app)
     {
         $response = call_user_func_array($this->callback, array_merge($this->parameters, [$app]));
-        parent::callAfterCallbacks($app);
+        $this->callAfterCallbacks($app);
 
         return $response;
     }

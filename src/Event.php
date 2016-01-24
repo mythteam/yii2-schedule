@@ -235,7 +235,7 @@ class Event extends Component
         $address = is_array($address) ? $address : func_get_args();
 
         return $this->then(function (Application $app) use ($address) {
-            $thsi->sendEmail($app->mailer, $address);
+            $this->sendEmail($app->mailer, $address);
         });
     }
 
