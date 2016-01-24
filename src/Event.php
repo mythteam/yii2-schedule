@@ -15,10 +15,11 @@ use Cron\CronExpression;
 use GuzzleHttp\Client as HttpClient;
 use Symfony\Component\Process\Process;
 use yii\base\Application;
+use yii\base\Component;
 use yii\base\InvalidCallException;
 use yii\mail\MailerInterface;
 
-class Event extends \yii\base\Component
+class Event extends Component
 {
     const EVENT_BEFORE_RUN = 'beforeRun';
     const EVENT_AFTER_RUN = 'afterRun';
@@ -72,7 +73,7 @@ class Event extends \yii\base\Component
      * Create a new event instance.
      *
      * @param string $command
-     * @param array  $config
+     * @param array $config
      */
     public function __construct($command, $config = [])
     {
@@ -227,7 +228,8 @@ class Event extends \yii\base\Component
     public function emailOutput($address)
     {
         if (is_null($this->_output)
-            || $this->_output == $this->getDefaultOutput()) {
+            || $this->_output == $this->getDefaultOutput()
+        ) {
             throw new InvalidCallException('Must direct output to file in order to email results.');
         }
         $address = is_array($address) ? $address : func_get_args();
@@ -286,6 +288,7 @@ class Event extends \yii\base\Component
         chdir(dirname($app->request->getScriptFile()));
         exec($this->buildCommand());
     }
+
     /**
      * Determine if the given event should run based on the Cron expression.
      *
@@ -297,6 +300,7 @@ class Event extends \yii\base\Component
     {
         return $this->expressionPasses() && $this->filtersPass($app);
     }
+
     /**
      * Determine if the Cron expression passes.
      *
@@ -311,6 +315,7 @@ class Event extends \yii\base\Component
 
         return CronExpression::factory($this->_expression)->isDue($date);
     }
+
     /**
      * Determine if the filters pass for the event.
      *
@@ -321,7 +326,8 @@ class Event extends \yii\base\Component
     protected function filtersPass(Application $app)
     {
         if (($this->_filter && ($this->_filter))
-            || $this->_reject && call_user_func($this->_reject, $app)) {
+            || $this->_reject && call_user_func($this->_reject, $app)
+        ) {
             return false;
         }
 
@@ -385,8 +391,8 @@ class Event extends \yii\base\Component
     {
         $segments = explode(':', $time);
 
-        return $this->spliceIntoPosition(2, (int) $segments[0])
-                    ->spliceIntoPosition(1, count($segments) == 2 ? (int) $segments[1] : '0');
+        return $this->spliceIntoPosition(2, (int)$segments[0])
+            ->spliceIntoPosition(1, count($segments) == 2 ? (int)$segments[1] : '0');
     }
 
     /**
@@ -472,6 +478,7 @@ class Event extends \yii\base\Component
     {
         return $this->days(5);
     }
+
     /**
      * Schedule the event to run only on Saturdays.
      *
@@ -481,6 +488,7 @@ class Event extends \yii\base\Component
     {
         return $this->days(6);
     }
+
     /**
      * Schedule the event to run only on Sundays.
      *
@@ -504,7 +512,7 @@ class Event extends \yii\base\Component
     /**
      * Schedule the event to run weekly on a given day and time.
      *
-     * @param int    $day
+     * @param int $day
      * @param string $time
      *
      * @return $this
@@ -515,6 +523,7 @@ class Event extends \yii\base\Component
 
         return $this->spliceIntoPosition(5, $day);
     }
+
     /**
      * Schedule the event to run monthly.
      *
@@ -524,6 +533,7 @@ class Event extends \yii\base\Component
     {
         return $this->cron('0 0 1 * * *');
     }
+
     /**
      * Schedule the event to run yearly.
      *
@@ -543,6 +553,7 @@ class Event extends \yii\base\Component
     {
         return $this->cron('* * * * * *');
     }
+
     /**
      * Schedule the event to run every N minutes.
      *
@@ -554,6 +565,7 @@ class Event extends \yii\base\Component
     {
         return $this->cron('*/' . $minutes . ' * * * * *');
     }
+
     /**
      * Schedule the event to run every five minutes.
      *
@@ -573,6 +585,7 @@ class Event extends \yii\base\Component
     {
         return $this->everyNMinutes(10);
     }
+
     /**
      * Schedule the event to run every thirty minutes.
      *
@@ -586,7 +599,7 @@ class Event extends \yii\base\Component
     /**
      * Splice the given value into the given position of the expression.
      *
-     * @param int    $position
+     * @param int $position
      * @param string $value
      *
      * @return Event
@@ -606,7 +619,7 @@ class Event extends \yii\base\Component
      */
     public function buildCommand()
     {
-        $command = $this->command . ' > ' . $this->_output . ' 2>&1 &';
+        $command = $this->command . ' >> ' . $this->_output . ' 2>&1 &';
 
         return $this->_user ? 'sudo -u ' . $this->_user . ' ' . $command : $command;
     }
@@ -615,14 +628,14 @@ class Event extends \yii\base\Component
      * Send email logic.
      *
      * @param MailerInterface $mailer
-     * @param array           $address
+     * @param array $address
      */
     protected function sendEmail(MailerInterface $mailer, $address)
     {
         $message = $mailer->compose();
         $message->setTextBody(file_get_contents($this->_output))
-                ->setSubject($this->getEmailSubject())
-                ->setTo($address);
+            ->setSubject($this->getEmailSubject())
+            ->setTo($address);
 
         $message->send();
     }

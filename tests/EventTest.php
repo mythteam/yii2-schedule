@@ -44,7 +44,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSummary()
     {
-        $this->assertEquals('ls -a > NUL 2>&1 &', $this->event->getSummaryForDisplay());
+        $this->assertEquals('ls -a >> NUL 2>&1 &', $this->event->getSummaryForDisplay());
 
         $this->event->description('test description');
 
@@ -56,7 +56,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
         //default
         $this->event->output('/home/schedule.log');
 
-        $this->assertEquals('ls -a > /home/schedule.log 2>&1 &', $this->event->buildCommand());
+        $this->assertEquals('ls -a >> /home/schedule.log 2>&1 &', $this->event->buildCommand());
     }
 
     public function testAssignTimezone()

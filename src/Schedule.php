@@ -11,7 +11,10 @@
 
 namespace mythteam\schedule;
 
-class Schedule extends \yii\base\Component
+use yii\base\Component;
+use yii\base\Application;
+
+class Schedule extends Component
 {
     /**
      * @var array All the events to scheduled
@@ -76,7 +79,7 @@ class Schedule extends \yii\base\Component
      *
      * @return array
      */
-    public function dueEvents(\yii\base\Application $app)
+    public function dueEvents(Application $app)
     {
         return array_filter($this->_events, function (Event $event) use ($app) {
             return $event->isDue($app);

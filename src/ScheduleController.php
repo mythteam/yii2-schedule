@@ -13,14 +13,18 @@ namespace mythteam\schedule;
 
 use Yii;
 use yii\di\Instance;
+use yii\console\Controller;
 
 /**
  * ~~~
  * * * * * * php /path/to/yii yii schedule 1>> /dev/null 2>&1
  * ~~.
  */
-class ScheduleController extends \yii\console\Controller
+class ScheduleController extends Controller
 {
+    /**
+     * @var string|Schedule
+     */
     public $schedule = 'schedule';
 
     /**
@@ -62,6 +66,7 @@ class ScheduleController extends \yii\console\Controller
         $this->stdout(PHP_EOL);
         $this->importScheduleFile();
 
+        /** @var Event[] $events */
         $events = $this->schedule->dueEvents(Yii::$app);
 
         foreach ($events as $event) {
