@@ -26,7 +26,8 @@ class ScheduleTest extends \PHPUnit_Framework_TestCase
         $schedule->command('migrate');
         $schedule->command('migrate --migrationPath=@app');
         $events = $schedule->events;
-        $binary = PHP_BINARY . (defined('HHVM_VERSION') ? ' --php' : '');
+        //$binary = PHP_BINARY . (defined('HHVM_VERSION') ? ' --php' : '');
+        $binary = PHP_BINARY;
         $this->assertEquals($binary . ' yii migrate', $events[0]->command);
         $this->assertEquals($binary . ' yii migrate --migrationPath=@app', $events[1]->command);
     }
