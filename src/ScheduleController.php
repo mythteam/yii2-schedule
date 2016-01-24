@@ -53,7 +53,9 @@ class ScheduleController extends Controller
      */
     public function init()
     {
-        if (Yii::$app->has($this->schedule)) {
+        if (is_string($this->schedule)
+            && Yii::$app->has($this->schedule)
+        ) {
             $this->schedule = Instance::ensure($this->schedule, Schedule::className());
         } else {
             $this->schedule = Yii::createObject(Schedule::className());
@@ -89,7 +91,7 @@ class ScheduleController extends Controller
 
         $scheduleFile = Yii::getAlias($this->scheduleFile);
 
-        if (file_exists($scheduleFile) == false) {
+        if (file_exists($scheduleFile) === false) {
             $this->stderr("Can not load schedule file {$this->scheduleFile}" . PHP_EOL);
 
             return;
