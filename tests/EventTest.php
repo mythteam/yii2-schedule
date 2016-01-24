@@ -44,7 +44,11 @@ class EventTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSummary()
     {
-        $this->assertEquals('ls -a >> NUL 2>&1 &', $this->event->getSummaryForDisplay());
+        $dest = '/dev/null';
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $dest = 'NUL';
+        }
+        $this->assertEquals("ls -a >> {$dest} 2>&1 &", $this->event->getSummaryForDisplay());
 
         $this->event->description('test description');
 
