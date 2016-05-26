@@ -24,7 +24,7 @@ class Schedule extends Component
     /**
      * Register a callback style schedule event.
      *
-     * @param Course $callback
+     * @param \Closure $callback
      * @param array  $parameters
      *
      * @return Event
