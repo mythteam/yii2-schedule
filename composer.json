@@ -1,6 +1,13 @@
 {
   "name": "mythteam/yii2-schedule",
-  "description": "schedule",
+  "description": "Schedule component port from laravel",
+  "keywords": [
+    "yii2",
+    "schedule",
+    "cron",
+    "crontab",
+    "yii2 cron"
+  ],
   "type": "library",
   "license": "BSD",
   "authors": [

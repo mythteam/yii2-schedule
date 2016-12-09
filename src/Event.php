@@ -35,7 +35,7 @@ class Event extends Component
     protected $_expression = '* * * * * *';
 
     /**
-     * @var \DateTimeZone|string The tiemzone the date should be evaluated.
+     * @var \DateTimeZone|string The timezone the date should be evaluated.
      */
     protected $_timezone;
 
